@@ -3,7 +3,7 @@
   <img src={{gif.images.fixed_height.url}}>
 </div>
 <div class="overlay">
-  <button>Upvote</button>
-  <button>Downvote</button>
+  <button {{action "gifUpvote" gif.id}}>Upvote</button>
+  <button {{action "gifDownvote" gif.id}}>Downvote</button>
 </div>
 {{/each}}
