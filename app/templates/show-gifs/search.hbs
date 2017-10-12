@@ -1,0 +1,9 @@
+{{#each (search-result model) as |gif|}}
+<div>
+  <img src={{gif.images.fixed_height.url}}>
+</div>
+<div class="overlay">
+  <button>Upvote</button>
+  <button>Downvote</button>
+</div>
+{{/each}}

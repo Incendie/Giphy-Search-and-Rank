@@ -1,0 +1,6 @@
+<h2>show-gifs</h2>
+<form>
+  {{input value=value placeholder="Search for Gifs"}}
+  <button {{action "submitSearch" value}}>Search</button>
+</form>
+{{outlet}} {{!-- {{#link-to "apple"}}Go{{/link-to}} --}}
