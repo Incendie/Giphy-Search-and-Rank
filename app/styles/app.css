@@ -17,12 +17,26 @@ header {
 
 main {
   padding: 40px 0;
+  min-height: 700px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: #e2b4bd;
 }
 
 footer {
   background: #424b54;
   color: white;
   padding: 20px 0;
+}
+
+footer p {
+  margin-left: 20px;
 }
 
 form {
@@ -36,6 +50,7 @@ input {
   margin-right: 10px;
   width: 25%;
   font-size: 16px;
+  min-width: 300px;
 }
 
 form button {
@@ -43,6 +58,7 @@ form button {
   padding: 12px 24px;
   color: white;
   width: 12.5%;
+  min-width: 150px;
   font-size: 16px;
 }
 
@@ -61,6 +77,9 @@ img {
   height: 100%;
   display: block;
   margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .wrapper {
@@ -105,4 +124,56 @@ img {
 
 .vote:hover {
   color: green;
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    max-width: 420px;
+  }
+
+  .gifContainer {
+    justify-content: space-around;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    margin: 20px auto;
+    margin-bottom: 10px;
+  }
+
+  form button {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    max-width: 280px;
+  }
+
+  .gifContainer {
+    flex-direction: column;
+  }
+
+  .gifContainer__gif {
+    width: 75%;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  input {
+    min-width: 250px;
+  }
 }

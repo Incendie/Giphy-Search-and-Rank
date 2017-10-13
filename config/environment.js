@@ -5,7 +5,7 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: "giphy-app",
     environment,
-    rootURL: "/",
+    rootURL: "/GifSearch",
     locationType: "auto",
 
     firebase: {
@@ -54,6 +54,7 @@ module.exports = function(environment) {
   }
 
   if (environment === "production") {
+    ENV.rootURL;
   }
 
   return ENV;

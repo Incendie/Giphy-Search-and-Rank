@@ -7,58 +7,59 @@ export default Ember.Route.extend({
       let fb = this.store.findAll("gif-rank");
       let fbID = [];
       let gifData = [];
+
+      //setup comparison arrays
       fb.then(res => {
         res.content.forEach((entry, id) => {
           fbID.push(entry.id);
-          let gifVotes = entry._data.votes;
-          let gifID = entry._data.gifID;
           gifData.push(entry._data);
         });
+
+        //increment vote by 1 in firebase
         fbID.forEach(idNum => {
           this.store.findRecord("gif-rank", idNum).then(record => {
             if (record.data.gifID === giphyID) {
               let numVotes = record.data.votes;
               numVotes++;
+              record.data.votes++;
+              $(`#${record.data.gifID}`).css("order", -record.data.votes);
+              $(`#${record.data.gifID} .numVotes`).text(record.data.votes);
               record.set("votes", numVotes);
               record.save();
             }
           });
         });
-        for (let i = 0; i < gifData.length; i++) {
-          $(`#${gifData[i].gifID}`).css("order", i.toString());
-          $(`#${gifData[i].gifID} p`).text(gifData[i].votes);
-        }
-        this.rerender();
       });
     },
+
     gifDownvote(giphyID) {
       let fb = this.store.findAll("gif-rank", "votes");
       let fbID = [];
       let gifData = [];
+
+      //setup comparison arrays
       fb.then(res => {
         res.content.forEach((entry, id) => {
           fbID.push(entry.id);
-          let gifVotes = entry._data.votes;
-          let gifID = entry._data.gifID;
           gifData.push(entry._data);
         });
+
+        //decrement vote by 1 in firebase
         fbID.forEach(idNum => {
           this.store.findRecord("gif-rank", idNum).then(record => {
             if (record.data.gifID === giphyID) {
               let numVotes = record.data.votes;
               if (numVotes > 0) {
                 numVotes--;
+                record.data.votes--;
+                $(`#${record.data.gifID}`).css("order", -record.data.votes);
+                $(`#${record.data.gifID} .numVotes`).text(record.data.votes);
                 record.set("votes", numVotes);
                 record.save();
               }
             }
           });
         });
-        for (let i = 0; i < gifData.length; i++) {
-          $(`#${gifData[i].gifID}`).css("order", i.toString());
-          $(`#${gifData[i].gifID} p`).text(gifData[i].votes);
-        }
-        this.rerender();
       });
     }
   },
@@ -70,11 +71,14 @@ export default Ember.Route.extend({
       rating: "g"
     });
   },
+
   afterModel(promise) {
     let fb = this.store.findAll("gif-rank", "votes");
     let fbID = [];
     let gifData = [];
     let promiseID = [];
+
+    //setup comparison arrays
     promise.data.forEach(data => {
       promiseID.push(data.id);
     });
@@ -84,14 +88,17 @@ export default Ember.Route.extend({
         fbID.push(entry.id);
         gifData.push(entry._data);
       });
+
+      //sort gifs in order to be viewed
       gifData.sort((a, b) => {
         return b.votes - a.votes;
       });
 
       for (let i = 0; i < gifData.length; i++) {
-        $(`#${gifData[i].gifID}`).css("order", i.toString());
-        $(`#${gifData[i].gifID} p`).text(gifData[i].votes);
+        $(`#${gifData[i].gifID}`).css("order", -gifData[i].votes);
+        $(`#${gifData[i].gifID} .numVotes`).text(gifData[i].votes);
       }
+
       //create new firebase entries if don't exist
       if (fbID.length === 0) {
         promiseID.forEach(giphyID => {
