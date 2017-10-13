@@ -173,6 +173,11 @@ img {
     font-size: 28px;
   }
 
+  img {
+    top: 0;
+    transform: translateY(0%);
+  }
+
   input {
     min-width: 250px;
   }
