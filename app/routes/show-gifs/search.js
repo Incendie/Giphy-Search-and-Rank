@@ -6,11 +6,13 @@ export default Ember.Route.extend({
     gifUpvote(giphyID) {
       let fb = this.store.findAll("gif-rank");
       let fbID = [];
+      let gifData = [];
       fb.then(res => {
         res.content.forEach((entry, id) => {
           fbID.push(entry.id);
           let gifVotes = entry._data.votes;
           let gifID = entry._data.gifID;
+          gifData.push(entry._data);
         });
         fbID.forEach(idNum => {
           this.store.findRecord("gif-rank", idNum).then(record => {
@@ -22,16 +24,23 @@ export default Ember.Route.extend({
             }
           });
         });
+        for (let i = 0; i < gifData.length; i++) {
+          $(`#${gifData[i].gifID}`).css("order", i.toString());
+          $(`#${gifData[i].gifID} p`).text(gifData[i].votes);
+        }
+        this.rerender();
       });
     },
     gifDownvote(giphyID) {
       let fb = this.store.findAll("gif-rank", "votes");
       let fbID = [];
+      let gifData = [];
       fb.then(res => {
         res.content.forEach((entry, id) => {
           fbID.push(entry.id);
           let gifVotes = entry._data.votes;
           let gifID = entry._data.gifID;
+          gifData.push(entry._data);
         });
         fbID.forEach(idNum => {
           this.store.findRecord("gif-rank", idNum).then(record => {
@@ -45,39 +54,44 @@ export default Ember.Route.extend({
             }
           });
         });
+        for (let i = 0; i < gifData.length; i++) {
+          $(`#${gifData[i].gifID}`).css("order", i.toString());
+          $(`#${gifData[i].gifID} p`).text(gifData[i].votes);
+        }
+        this.rerender();
       });
     }
   },
-  beforeModel(param) {
-    let fb = this.store.findAll("gif-rank");
-    fb.then(fbres => {
-      console.log(fbres);
-    });
-  },
   model(params) {
-    return Ember.$
-      .getJSON("http://api.giphy.com/v1/gifs/search", {
-        api_key: "n0sOp14xAIkQFZAa5AAZNKYyKGopgPzf",
-        q: `${params.results}`,
-        offset: "0"
-      })
-      .then(() => {
-        console.log("lalala");
-      });
+    return Ember.$.getJSON("http://api.giphy.com/v1/gifs/search", {
+      api_key: "n0sOp14xAIkQFZAa5AAZNKYyKGopgPzf",
+      q: `${params.results}`,
+      offset: "0",
+      rating: "g"
+    });
   },
   afterModel(promise) {
     let fb = this.store.findAll("gif-rank", "votes");
     let fbID = [];
+    let gifData = [];
     let promiseID = [];
     promise.data.forEach(data => {
       promiseID.push(data.id);
     });
 
     fb.then(res => {
-      res.content.forEach((entry, id) => {
+      res.content.forEach(entry => {
         fbID.push(entry.id);
+        gifData.push(entry._data);
+      });
+      gifData.sort((a, b) => {
+        return b.votes - a.votes;
       });
 
+      for (let i = 0; i < gifData.length; i++) {
+        $(`#${gifData[i].gifID}`).css("order", i.toString());
+        $(`#${gifData[i].gifID} p`).text(gifData[i].votes);
+      }
       //create new firebase entries if don't exist
       if (fbID.length === 0) {
         promiseID.forEach(giphyID => {

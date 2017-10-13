@@ -1,0 +1,108 @@
+.container {
+  background: #e2b4bd;
+}
+
+body,
+input,
+button {
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 1px;
+}
+
+header {
+  background: #424b54;
+  color: white;
+  padding: 30px 0;
+}
+
+main {
+  padding: 40px 0;
+}
+
+footer {
+  background: #424b54;
+  color: white;
+  padding: 20px 0;
+}
+
+form {
+  margin: 20px 0;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 25%;
+  font-size: 16px;
+}
+
+form button {
+  background: #9b6a6c;
+  padding: 12px 24px;
+  color: white;
+  width: 12.5%;
+  font-size: 16px;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+h1 {
+  margin: 0;
+  font-size: 40px;
+}
+
+img {
+  max-width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.wrapper {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.gifContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.gifContainer__gif {
+  position: relative;
+  margin: 20px;
+  max-height: 200px;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.vote {
+  color: white;
+  cursor: pointer;
+  font-size: 40px;
+  margin: 10px 0;
+}
+
+.numVotes {
+  color: white;
+  font-size: 12px;
+}
+
+.vote:hover {
+  color: green;
+}

@@ -1,9 +1,11 @@
-{{#each (search-result model) as |gif|}}
-<div>
-  <img src={{gif.images.fixed_height.url}}>
+<div class="gifContainer">{{#each (search-result model) as |gif|}}
+  <div class="gifContainer__gif" id={{gif.id}}>
+    <img src={{gif.images.fixed_width.url}}>
+    <div class="overlay">
+      <button class="vote" {{action "gifUpvote" gif.id}}>↑</button>
+      <p class="numVotes"></p>
+      <button class="vote" {{action "gifDownvote" gif.id}}>↓</button>
+    </div>
+  </div>
+  {{/each}}
 </div>
-<div class="overlay">
-  <button {{action "gifUpvote" gif.id}}>Upvote</button>
-  <button {{action "gifDownvote" gif.id}}>Downvote</button>
-</div>
-{{/each}}
